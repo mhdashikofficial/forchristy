@@ -8,12 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+* { margin:0; padding:0; box-sizing:border-box; }
 body {
   min-height: 100vh;
   background: linear-gradient(135deg, #0f001a, #1a000f, #2a0015);
@@ -21,260 +16,71 @@ body {
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
 }
-
-#hearts {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.heart {
-  position: absolute;
-  font-size: clamp(1.4rem, 4vw, 2rem);
-  animation: rise linear forwards;
-}
-
+#hearts { position:fixed; inset:0; pointer-events:none; z-index:1; }
+.heart { position:absolute; font-size: clamp(1.4rem,4vw,2rem); animation: rise linear forwards; }
 @keyframes rise {
-  0%   { transform: translateY(110vh) scale(0.4); opacity: 0.8; }
-  100% { transform: translateY(-30vh) scale(1.2) rotate(1080deg); opacity: 0; }
+  0% { transform: translateY(110vh) scale(0.4); opacity:0.8; }
+  100% { transform: translateY(-30vh) scale(1.2) rotate(1080deg); opacity:0; }
 }
-
 .container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
-  position: relative;
-  z-index: 10;
+  min-height:100vh; display:flex; justify-content:center; align-items:center; padding:16px; position:relative; z-index:10;
 }
-
 .card {
-  background: rgba(25, 8, 45, 0.88);
-  backdrop-filter: blur(14px);
-  border-radius: 24px;
-  width: 100%;
-  max-width: 720px;
-  padding: clamp(1.5rem, 5vw, 2.5rem);
-  display: flex;
-  flex-direction: column;
-  min-height: 80vh;
-  max-height: 95vh;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  background:rgba(25,8,45,0.88); backdrop-filter:blur(14px); border-radius:24px;
+  width:100%; max-width:720px; padding:clamp(1.5rem,5vw,2.5rem);
+  display:flex; flex-direction:column; min-height:80vh; max-height:95vh; overflow-y:auto;
 }
-
-h1 {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(3rem, 10vw, 5.5rem);
-  text-align: center;
-  color: #ff3366;
-  margin-bottom: 1rem;
-}
-
-#messages {
-  flex: 1;
-  padding: 1rem 0;
-}
-
-.message {
-  margin: 1.4rem 0;
-  opacity: 0;
-  transform: translateY(24px);
-  transition: all 0.8s ease-out;
-  font-size: clamp(1rem, 3.5vw, 1.15rem);
-  line-height: 1.55;
-}
-
-.message.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.btn-container {
-  text-align: center;
-  margin: 2rem 0 1.5rem;
-}
-
+h1 { font-family:'Great Vibes',cursive; font-size:clamp(3rem,10vw,5.5rem); text-align:center; color:#ff3366; margin-bottom:1rem; }
+#messages { flex:1; padding:1rem 0; }
+.message { margin:1.4rem 0; opacity:0; transform:translateY(24px); transition:all 0.8s ease-out; font-size:clamp(1rem,3.5vw,1.15rem); line-height:1.55; }
+.message.visible { opacity:1; transform:translateY(0); }
+.btn-container { text-align:center; margin:2rem 0 1.5rem; }
 .btn {
-  background: linear-gradient(45deg, #ff1e56, #ff5e78);
-  border: none;
-  border-radius: 999px;
-  padding: clamp(0.95rem, 4vw, 1.15rem) clamp(2.2rem, 6vw, 3rem);
-  font-size: clamp(1.05rem, 4vw, 1.2rem);
-  color: white;
-  cursor: pointer;
-  transition: transform 0.2s;
-  margin: 0 10px;
-  touch-action: manipulation;
+  background:linear-gradient(45deg,#ff1e56,#ff5e78); border:none; border-radius:999px;
+  padding:clamp(0.95rem,4vw,1.15rem) clamp(2.2rem,6vw,3rem); font-size:clamp(1.05rem,4vw,1.2rem);
+  color:white; cursor:pointer; transition:transform 0.2s; margin:0 10px;
 }
-
-.btn:active { transform: scale(0.97); }
-
-.btn.yes {
-  background: linear-gradient(45deg, #c026d3, #a855f7);
-}
-
-.hidden { display: none; }
-
-.countdown {
-  font-size: clamp(1.5rem, 5vw, 2.3rem);
-  text-align: center;
-  margin: 1.3rem 0;
-  color: #ff99cc;
-}
-
-.calendar {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  gap: 12px;
-  margin: 1.8rem auto;
-  max-width: 100%;
-  padding: 0 10px;
-}
-
+.btn:active { transform:scale(0.97); }
+.btn.yes { background:linear-gradient(45deg,#c026d3,#a855f7); }
+.hidden { display:none; }
+.countdown { font-size:clamp(1.5rem,5vw,2.3rem); text-align:center; margin:1.3rem 0; color:#ff99cc; }
+.calendar { display:grid; grid-template-columns:repeat(auto-fit,minmax(90px,1fr)); gap:12px; margin:1.8rem auto; max-width:100%; padding:0 10px; }
 .day {
-  padding: 1rem 0.6rem;
-  border-radius: 16px;
-  background: #2a0035;
-  font-size: clamp(0.95rem, 3vw, 1.1rem);
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.25s;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 85px;
+  padding:1rem 0.6rem; border-radius:16px; background:#2a0035; font-size:clamp(0.95rem,3vw,1.1rem);
+  text-align:center; cursor:pointer; transition:all 0.25s; min-height:85px; display:flex; flex-direction:column; justify-content:center; align-items:center;
 }
+.day:hover { transform:scale(1.05); background:#3e0052; }
+.day.done { background:linear-gradient(135deg,#c026d3,#ff3366); box-shadow:0 0 14px rgba(192,38,211,0.6); }
+.future { opacity:0.5; cursor:default; }
+.day-name { font-weight:600; font-size:0.92em; opacity:0.9; margin-bottom:4px; }
+.day-num { font-size:1.4em; font-weight:500; }
+.quote { font-family:'Great Vibes',cursive; font-size:clamp(1.9rem,6vw,2.8rem); text-align:center; margin:2.5rem 1rem 1.5rem; color:#ff99cc; line-height:1.35; }
 
-.day:hover, .day:active {
-  transform: scale(1.05);
-  background: #3e0052;
-}
-
-.day.done {
-  background: linear-gradient(135deg, #c026d3, #ff3366);
-  box-shadow: 0 0 14px rgba(192,38,211,0.6);
-}
-
-.future {
-  opacity: 0.5;
-  cursor: default;
-}
-
-.future:hover, .future:active {
-  transform: none;
-  background: #2a0035;
-}
-
-.day-name { font-weight: 600; font-size: 0.92em; opacity: 0.9; margin-bottom: 4px; }
-.day-num  { font-size: 1.4em; font-weight: 500; }
-
-.quote {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(1.9rem, 6vw, 2.8rem);
-  text-align: center;
-  margin: 2.5rem 1rem 1.5rem;
-  color: #ff99cc;
-  line-height: 1.35;
-}
-
-/* Popup - made more reliable */
+/* POPUP - high visibility */
 .popup-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
+  position:fixed; inset:0; background:rgba(0,0,0,0.88); display:flex; justify-content:center; align-items:center;
+  z-index:1000; opacity:0; pointer-events:none; transition:opacity 0.35s;
 }
-
-.popup-overlay.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
+.popup-overlay.active { opacity:1; pointer-events:all; }
 .popup {
-  background: rgba(30,10,50,0.97);
-  backdrop-filter: blur(14px);
-  border: 2px solid #c026d3;
-  border-radius: 22px;
-  width: 90%;
-  max-width: 540px;
-  padding: clamp(2rem, 6vw, 3rem) 1.8rem;
-  text-align: center;
-  transform: scale(0.75);
-  opacity: 0;
-  transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
-  position: relative;
-  overflow: hidden;
+  background:rgba(35,12,55,0.97); backdrop-filter:blur(16px); border:2px solid #c026d3; border-radius:22px;
+  width:90%; max-width:560px; padding:2.5rem 1.8rem; text-align:center;
+  transform:scale(0.8); opacity:0; transition: all 0.45s ease-out;
 }
-
-.popup.active {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.popup h2 {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(2.8rem, 9vw, 4.2rem);
-  color: #ff99cc;
-  margin-bottom: 0.6rem;
-}
-
-.popup .day-title {
-  font-size: clamp(1.35rem, 4.5vw, 1.7rem);
-  color: #ff3366;
-  margin-bottom: 1.2rem;
-  font-weight: 500;
-}
-
+.popup.active { transform:scale(1); opacity:1; }
+.popup h2 { font-family:'Great Vibes',cursive; font-size:clamp(3rem,10vw,4.5rem); color:#ff99cc; margin-bottom:0.5rem; }
+.popup .day-title { font-size:clamp(1.4rem,5vw,1.8rem); color:#ff3366; margin:0.8rem 0 1.4rem; font-weight:500; }
 .popup .message {
-  font-size: clamp(1.08rem, 3.8vw, 1.25rem);
-  line-height: 1.75;
-  color: #f0e6ff;
-  margin: 1.6rem 0;
-  padding: 0 12px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  font-size:clamp(1.1rem,4vw,1.3rem); line-height:1.7; color:#ffffff; margin:1.2rem 0;
+  padding:12px; background:rgba(255,255,255,0.05); border-radius:12px; min-height:80px;
+  white-space:pre-wrap; word-wrap:break-word;
 }
-
 .popup .close-btn {
-  margin-top: 1.6rem;
-  background: linear-gradient(45deg, #ff3366, #c026d3);
-  border: none;
-  color: white;
-  padding: 1rem 2.6rem;
-  border-radius: 999px;
-  font-size: clamp(1.08rem, 4vw, 1.2rem);
-  cursor: pointer;
-  transition: transform 0.2s;
+  margin-top:1.6rem; background:linear-gradient(45deg,#ff3366,#c026d3); border:none; color:white;
+  padding:1rem 2.8rem; border-radius:999px; font-size:clamp(1.1rem,4vw,1.25rem); cursor:pointer;
 }
-
-.popup .close-btn:active {
-  transform: scale(0.97);
-}
-
-.popup::before {
-  content: '💞';
-  position: absolute;
-  font-size: 10rem;
-  opacity: 0.06;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-12deg);
-  pointer-events: none;
-}
-
-@media (max-width: 380px) {
-  .calendar { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .day { min-height: 100px; }
+@media (max-width:400px) {
+  .calendar { grid-template-columns:repeat(2,1fr); }
 }
 </style>
 </head>
@@ -298,7 +104,6 @@ h1 {
   </div>
 </div>
 
-<!-- Popup -->
 <div class="popup-overlay" id="popupOverlay">
   <div class="popup" id="popup">
     <h2 id="popupDay"></h2>
@@ -315,10 +120,10 @@ function createHeart() {
   const h = document.createElement('div');
   h.className = 'heart';
   h.innerHTML = ['♡','💗','💞','💖','❤️','💘'][Math.floor(Math.random()*6)];
-  h.style.left = Math.random() * 100 + 'vw';
-  h.style.animationDuration = (Math.random() * 6 + 8) + 's';
+  h.style.left = Math.random()*100 + 'vw';
+  h.style.animationDuration = (Math.random()*6 + 8) + 's';
   heartBox.appendChild(h);
-  setTimeout(() => h.remove(), 15000);
+  setTimeout(()=>h.remove(),15000);
 }
 setInterval(createHeart, 800);
 
@@ -326,41 +131,36 @@ setInterval(createHeart, 800);
 const messages = document.querySelectorAll('#messages .message');
 const nextBtn = document.getElementById('nextBtn');
 const yesBtn = document.getElementById('yesBtn');
-let currentIndex = -1;
+let idx = -1;
 
-function showNext() {
-  currentIndex++;
-  if (currentIndex < messages.length) {
-    messages[currentIndex].classList.add('visible');
+function nextMessage() {
+  idx++;
+  if (idx < messages.length) {
+    messages[idx].classList.add('visible');
   }
-  if (currentIndex === messages.length - 1) {
+  if (idx === messages.length - 1) {
     nextBtn.classList.add('hidden');
     yesBtn.classList.remove('hidden');
   }
 }
+nextMessage(); // show first
+nextBtn.onclick = nextMessage;
 
-// Start with first message
-showNext();
-
-nextBtn.addEventListener('click', showNext);
-
-// Valentine's messages
-const valentineDays = [
+// Valentine's data
+const days = [
   null,
-  {name: "Rose Day",       title: "You make everything prettier", msg: "Just looking at you feels like someone handed me the most beautiful rose without even trying."},
-  {name: "Propose Day",    title: "You're still my favorite yes", msg: "Every time I think about you saying yes to me, my heart does that stupid happy jump again."},
-  {name: "Chocolate Day",  title: "You're my sweetest addiction", msg: "You're literally sweeter than any chocolate… and way more addictive too."},
-  {name: "Teddy Day",      title: "You’re my comfort", msg: "Being near you feels exactly how I imagine hugging the softest teddy would feel… but a million times better."},
-  {name: "Promise Day",    title: "I'm never letting go", msg: "I promise you’ll always have me — through boring days, silly fights, and every beautiful moment in between."},
-  {name: "Hug Day",        title: "Your hugs fix everything", msg: "One hug from you and suddenly the whole world feels okay again. Magic."},
-  {name: "Kiss Day",       title: "Your lips are my favorite place", msg: "Every time we kiss I forget where I am… I just know I’m exactly where I’m supposed to be."},
-  {name: "Valentine’s Day",title: "You’re my always", msg: "Valentine’s is cute, but honestly every single day with you feels like the most special day. I love you so much."}
+  {name:"Rose Day", title:"You make everything prettier", msg:"Just looking at you feels like someone handed me the most beautiful rose without even trying."},
+  {name:"Propose Day", title:"You're still my favorite yes", msg:"Every time I think about you saying yes to me, my heart does that stupid happy jump again."},
+  {name:"Chocolate Day", title:"You're my sweetest addiction", msg:"You're literally sweeter than any chocolate… and way more addictive too."},
+  {name:"Teddy Day", title:"You’re my comfort", msg:"Being near you feels exactly how I imagine hugging the softest teddy would feel… but a million times better."},
+  {name:"Promise Day", title:"I'm never letting go", msg:"I promise you’ll always have me — through boring days, silly fights, and every beautiful moment in between."},
+  {name:"Hug Day", title:"Your hugs fix everything", msg:"One hug from you and suddenly the whole world feels okay again. Magic."},
+  {name:"Kiss Day", title:"Your lips are my favorite place", msg:"Every time we kiss I forget where I am… I just know I’m exactly where I’m supposed to be."},
+  {name:"Valentine’s Day", title:"You’re my always", msg:"Valentine’s is cute, but honestly every single day with you feels like the most special day. I love you so much."}
 ];
 
-// Yes → show journey
-yesBtn.addEventListener('click', () => {
-  const card = document.getElementById('mainCard');
-  card.innerHTML = `
+yesBtn.onclick = () => {
+  document.getElementById('mainCard').innerHTML = `
     <h1>Our Love Journey ♡</h1>
     <div class="countdown" id="countdown"></div>
     <div class="calendar" id="calendar"></div>
@@ -370,84 +170,74 @@ yesBtn.addEventListener('click', () => {
   // Countdown
   const target = new Date("Feb 14, 2026 00:00:00").getTime();
   setInterval(() => {
-    const now = new Date().getTime();
-    const distance = target - now;
-    if (distance < 0) {
-      document.getElementById('countdown').innerHTML = "Happy Valentine's Day, my love! ♡";
+    const dist = target - Date.now();
+    if (dist < 0) {
+      document.getElementById('countdown').textContent = "Happy Valentine's Day, my love! ♡";
       return;
     }
-    const days  = Math.floor(distance / (1000*60*60*24));
-    const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-    const mins  = Math.floor((distance % (1000*60*60)) / (1000*60));
-    document.getElementById('countdown').innerHTML = `${days}d ${hours}h ${mins}m until our Valentine's ♡`;
+    const d = Math.floor(dist / 86400000);
+    const h = Math.floor((dist % 86400000) / 3600000);
+    const m = Math.floor((dist % 3600000) / 60000);
+    document.getElementById('countdown').textContent = `${d}d ${h}h ${m}m until our Valentine's ♡`;
   }, 1000);
 
   // Calendar
   const today = new Date();
-  const curMonth = today.getMonth();
-  const curDate = today.getDate();
-
+  const month = today.getMonth();
+  const date = today.getDate();
   const cal = document.getElementById('calendar');
 
   for (let d = 7; d <= 14; d++) {
-    const info = valentineDays[d - 6];
+    const info = days[d-6];
     if (!info) continue;
-
     const div = document.createElement('div');
     div.className = 'day';
-
-    const isPast = (curMonth === 1 && d <= curDate);
-
-    div.innerHTML = `
-      <div class="day-name">${info.name}</div>
-      <div class="day-num">${d}${isPast ? ' ✓' : ''}</div>
-    `;
-
+    const isPast = month === 1 && d <= date;
+    div.innerHTML = `<div class="day-name">${info.name}</div><div class="day-num">${d}${isPast ? ' ✓' : ''}</div>`;
     if (isPast) {
       div.classList.add('done');
-      div.addEventListener('click', () => showPopup(d));
+      div.onclick = () => showPopup(d);
     } else {
       div.classList.add('future');
     }
-
     cal.appendChild(div);
   }
-});
+};
 
-// Popup logic
-const popupOverlay = document.getElementById('popupOverlay');
+const overlay = document.getElementById('popupOverlay');
 const popup = document.getElementById('popup');
-const popupDayEl = document.getElementById('popupDay');
-const popupTitleEl = document.getElementById('popupTitle');
-const popupMsgEl = document.getElementById('popupMessage');
-const closePopup = document.getElementById('closePopup');
+const pDay = document.getElementById('popupDay');
+const pTitle = document.getElementById('popupTitle');
+const pMsg = document.getElementById('popupMessage');
+const close = document.getElementById('closePopup');
 
 function showPopup(day) {
-  const info = valentineDays[day - 6];
+  const info = days[day - 6];
   if (!info) return;
 
-  popupDayEl.textContent = info.name;
-  popupTitleEl.textContent = info.title;
-  popupMsgEl.textContent = info.msg;
+  console.log("Showing popup for day", day);
+  console.log("Title:", info.title);
+  console.log("Message:", info.msg);
 
-  popupOverlay.classList.add('active');
+  pDay.textContent = info.name;
+  pTitle.textContent = info.title;
+  pMsg.textContent = info.msg;
 
-  // Force reflow + delay for smooth animation
-  popup.offsetHeight;
-  setTimeout(() => popup.classList.add('active'), 30);
+  overlay.classList.add('active');
+  setTimeout(() => popup.classList.add('active'), 50);
 }
 
-closePopup.addEventListener('click', () => {
+close.onclick = () => {
   popup.classList.remove('active');
-  setTimeout(() => popupOverlay.classList.remove('active'), 400);
-});
+  setTimeout(() => overlay.classList.remove('active'), 400);
+};
 
-popupOverlay.addEventListener('click', (e) => {
-  if (e.target === popupOverlay) {
+overlay.onclick = e => {
+  if (e.target === overlay) {
     popup.classList.remove('active');
-    setTimeout(() => popupOverlay.classList.remove('active'), 400);
+    setTimeout(() => overlay.classList.remove('active'), 400);
   }
-});
+};
 </script>
 </body>
 </html>
