@@ -7,7 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -18,7 +18,6 @@ body{
   font-family:'Poppins',sans-serif;
   overflow:hidden;
 }
-
 #hearts{position:fixed;inset:0;pointer-events:none;z-index:1}
 .heart{position:absolute;font-size:1.8rem;animation:rise linear forwards}
 @keyframes rise{
@@ -46,12 +45,9 @@ h1{
   color:#ff3366;
 }
 
-.subtitle{text-align:center;color:#ff99cc;margin-bottom:1rem}
-
 #messages{flex:1;overflow-y:auto}
-.message{margin:1.2rem 0;opacity:0;transform:translateY(25px);transition:.8s}
+.message{margin:1rem 0;opacity:0;transform:translateY(20px);transition:.7s}
 .message.visible{opacity:1;transform:translateY(0)}
-.text-center{text-align:center}
 
 .btn-container{text-align:center;margin-top:1rem}
 .btn{
@@ -68,7 +64,12 @@ h1{
 
 .countdown{font-size:2rem;text-align:center;margin:1rem 0;color:#ff99cc}
 .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:10px}
-.day{padding:.6rem 0;border-radius:12px;background:#2a0035;font-size:.9rem}
+.day{
+  padding:.6rem 0;
+  border-radius:12px;
+  background:#2a0035;
+  font-size:.9rem;
+}
 .done{background:#c026d3}
 .future{opacity:.5}
 .quote{
@@ -86,18 +87,15 @@ h1{
 
 <div class="container">
 <div class="card">
+
 <h1>Christina ♡</h1>
-<div class="subtitle">My Catwoman • My Home • My Forever</div>
 
 <div id="messages">
-<div class="message visible">Christy, you came into my life when everything was feeling off and wrong — fake people, fake care.<br><br>Then you entered as the most real person I've ever seen in my life… with some real care.</div>
-<div class="message">You became something that finally made me feel like I have a home.<br><br>Something I want to hold lifelong with me.</div>
-<div class="message">Whenever I get a chance to do something for you, I really try my best to utilize it better.<br><br>And the moment I got the chance to be your boyfriend was my favourite moment with you.</div>
-<div class="message">It was like finally God saw my efforts and chose me for you.<br><br>I'm not making this over-dramatic — all this is straight from my thoughts and heart.</div>
-<div class="message">When the world feels competitive and heavy, giving me tough competition…<br>you're the only place I feel comfortable and home.</div>
-<div class="message">I do love you more than the words I wrote here.<br><br>You're already mine… but as it's Propose Day, I'm proposing you again:</div>
-<div class="message text-center" style="font-size:1.3rem;color:#ff99cc">
-<strong>Christina (my beautiful Catwoman),<br>will you be my Valentine… again and always?</strong>
+<div class="message visible">You walked into my life like fate whispering my name.</div>
+<div class="message">You didn’t just stay… you became my peace.</div>
+<div class="message">Every day with you feels like a place my heart was searching for.</div>
+<div class="message" style="text-align:center;font-size:1.2rem;color:#ff99cc">
+Will you be my Valentine… again and always?
 </div>
 </div>
 
@@ -105,6 +103,7 @@ h1{
 <button id="nextBtn" class="btn">Next ♡</button>
 <button id="yesBtn" class="btn yes hidden">Yes, forever ♡</button>
 </div>
+
 </div>
 </div>
 
