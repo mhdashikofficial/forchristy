@@ -56,28 +56,37 @@ h1 { font-family:'Great Vibes',cursive; font-size:clamp(3rem,10vw,5.5rem); text-
 .day-num { font-size:1.4em; font-weight:500; }
 .quote { font-family:'Great Vibes',cursive; font-size:clamp(1.9rem,6vw,2.8rem); text-align:center; margin:2.5rem 1rem 1.5rem; color:#ff99cc; line-height:1.35; }
 
-/* Popup - forced visibility */
+/* Popup styles - very visible message */
 .popup-overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,0.88); display:flex; justify-content:center; align-items:center;
-  z-index:1000; opacity:0; pointer-events:none; transition:opacity 0.4s;
+  position:fixed; inset:0; background:rgba(0,0,0,0.9); display:flex; justify-content:center; align-items:center;
+  z-index:1000; opacity:0; pointer-events:none; transition:opacity 0.4s ease;
 }
 .popup-overlay.active { opacity:1; pointer-events:all; }
 .popup {
-  background:rgba(35,12,55,0.97); backdrop-filter:blur(16px); border:2px solid #c026d3; border-radius:22px;
-  width:90%; max-width:560px; padding:2.5rem 1.8rem; text-align:center;
-  transform:scale(0.8); opacity:0; transition:all 0.45s ease-out;
+  background:rgba(40,15,60,0.98); backdrop-filter:blur(18px); border:3px solid #ff3366; border-radius:24px;
+  width:92%; max-width:580px; padding:clamp(2.2rem,6vw,3.2rem) 2rem; text-align:center;
+  transform:scale(0.75); opacity:0; transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);
 }
 .popup.active { transform:scale(1); opacity:1; }
-.popup h2 { font-family:'Great Vibes',cursive; font-size:clamp(3rem,10vw,4.5rem); color:#ff99cc; margin-bottom:0.5rem; }
-.popup .day-title { font-size:clamp(1.4rem,5vw,1.8rem); color:#ff3366; margin:0.8rem 0 1.4rem; font-weight:500; }
+.popup h2 { font-family:'Great Vibes',cursive; font-size:clamp(3.2rem,10vw,4.8rem); color:#ff99cc; margin-bottom:0.6rem; }
+.popup .day-title { font-size:clamp(1.45rem,5vw,1.9rem); color:#ff3366; margin:1rem 0 1.5rem; font-weight:500; }
 .popup .message {
-  font-size:clamp(1.1rem,4vw,1.3rem) !important; line-height:1.7; color:#ffffff !important;
-  margin:1.2rem 0; padding:20px; background:rgba(255,255,255,0.08); border-radius:12px;
-  min-height:100px; white-space:pre-wrap; word-wrap:break-word;
+  font-size:clamp(1.15rem,4.2vw,1.35rem) !important;
+  line-height:1.75;
+  color:#ffffff !important;
+  margin:1.5rem 0;
+  padding:24px 20px;
+  background:rgba(255,255,255,0.12) !important;
+  border-radius:16px;
+  min-height:110px;
+  white-space:pre-wrap;
+  word-wrap:break-word;
+  border:1px solid rgba(255,255,255,0.15);
+  font-weight:400;
 }
 .popup .close-btn {
-  margin-top:1.6rem; background:linear-gradient(45deg,#ff3366,#c026d3); border:none; color:white;
-  padding:1rem 2.8rem; border-radius:999px; font-size:clamp(1.1rem,4vw,1.25rem); cursor:pointer;
+  margin-top:1.8rem; background:linear-gradient(45deg,#ff3366,#c026d3); border:none; color:white;
+  padding:1.1rem 3rem; border-radius:999px; font-size:clamp(1.15rem,4.2vw,1.3rem); cursor:pointer;
 }
 @media (max-width:400px) { .calendar { grid-template-columns:repeat(2,1fr); } }
 </style>
@@ -102,17 +111,21 @@ h1 { font-family:'Great Vibes',cursive; font-size:clamp(3rem,10vw,5.5rem); text-
   </div>
 </div>
 
+<!-- Popup with fallback text -->
 <div class="popup-overlay" id="popupOverlay">
   <div class="popup" id="popup">
     <h2 id="popupDay"></h2>
     <div class="day-title" id="popupTitle"></div>
-    <div class="message" id="popupMessage">Loading message...</div>
+    <div class="message" id="popupMessage">
+      <!-- Fallback - should be replaced by JS -->
+      Message should appear here...
+    </div>
     <button class="close-btn" id="closePopup">Close ♡</button>
   </div>
 </div>
 
 <script>
-// Hearts
+// Hearts animation
 const heartBox = document.getElementById('hearts');
 function createHeart() {
   const h = document.createElement('div');
@@ -125,26 +138,26 @@ function createHeart() {
 }
 setInterval(createHeart, 800);
 
-// Messages flow
+// Messages reveal
 const messages = document.querySelectorAll('#messages .message');
 const nextBtn = document.getElementById('nextBtn');
 const yesBtn = document.getElementById('yesBtn');
-let idx = -1;
+let current = -1;
 
-function showNextMessage() {
-  idx++;
-  if (idx < messages.length) {
-    messages[idx].classList.add('visible');
+function showNext() {
+  current++;
+  if (current < messages.length) {
+    messages[current].classList.add('visible');
   }
-  if (idx === messages.length - 1) {
+  if (current === messages.length - 1) {
     nextBtn.classList.add('hidden');
     yesBtn.classList.remove('hidden');
   }
 }
-showNextMessage(); // start
-nextBtn.onclick = showNextMessage;
+showNext();
+nextBtn.onclick = showNext;
 
-// Data
+// Valentine's week messages
 const valentineDays = [
   null,
   {name:"Rose Day", title:"You make everything prettier", msg:"Just looking at you feels like someone handed me the most beautiful rose without even trying."},
@@ -157,7 +170,7 @@ const valentineDays = [
   {name:"Valentine’s Day", title:"You’re my always", msg:"Valentine’s is cute, but honestly every single day with you feels like the most special day. I love you so much."}
 ];
 
-// Yes → calendar
+// Show calendar after Yes
 yesBtn.onclick = () => {
   document.getElementById('mainCard').innerHTML = `
     <h1>Our Love Journey ♡</h1>
@@ -195,7 +208,7 @@ yesBtn.onclick = () => {
     div.innerHTML = `<div class="day-name">${info.name}</div><div class="day-num">${d}${isPast ? ' ✓' : ''}</div>`;
     if (isPast) {
       div.classList.add('done');
-      div.addEventListener('click', () => showDayPopup(d));
+      div.onclick = () => showPopup(d);
     } else {
       div.classList.add('future');
     }
@@ -211,24 +224,24 @@ const titleEl = document.getElementById('popupTitle');
 const msgEl = document.getElementById('popupMessage');
 const closeBtn = document.getElementById('closePopup');
 
-function showDayPopup(day) {
+function showPopup(day) {
   const info = valentineDays[day - 6];
+
   if (!info) {
-    msgEl.textContent = "Sorry, no message for this day.";
-    console.error("No data for day", day);
-    overlay.classList.add('active');
-    setTimeout(() => popupEl.classList.add('active'), 50);
-    return;
+    msgEl.textContent = "No message for this day.";
+  } else {
+    dayEl.textContent = info.name;
+    titleEl.textContent = info.title;
+    msgEl.textContent = info.msg;
   }
 
-  console.log("Day:", day, "Title:", info.title, "Msg:", info.msg);
-
-  dayEl.textContent = info.name;
-  titleEl.textContent = info.title;
-  msgEl.textContent = info.msg;
+  // Force visibility
+  msgEl.style.color = '#ffffff';
+  msgEl.style.opacity = '1';
+  msgEl.style.display = 'block';
 
   overlay.classList.add('active');
-  setTimeout(() => popupEl.classList.add('active'), 50);
+  setTimeout(() => popupEl.classList.add('active'), 60);
 }
 
 closeBtn.onclick = () => {
