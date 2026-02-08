@@ -55,7 +55,7 @@ body {
   backdrop-filter: blur(14px);
   border-radius: 24px;
   width: 100%;
-  max-width: 700px;
+  max-width: 720px;
   padding: clamp(1.5rem, 5vw, 2.5rem);
   display: flex;
   flex-direction: column;
@@ -181,18 +181,18 @@ h1 {
   line-height: 1.35;
 }
 
-/* Popup */
+/* Popup - made more reliable */
 .popup-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.82);
+  background: rgba(0,0,0,0.85);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s;
+  transition: opacity 0.4s ease;
 }
 
 .popup-overlay.active {
@@ -201,17 +201,19 @@ h1 {
 }
 
 .popup {
-  background: rgba(30,10,50,0.96);
-  backdrop-filter: blur(12px);
+  background: rgba(30,10,50,0.97);
+  backdrop-filter: blur(14px);
   border: 2px solid #c026d3;
   border-radius: 22px;
   width: 90%;
-  max-width: 520px;
-  padding: clamp(2rem, 6vw, 2.8rem) 1.6rem;
+  max-width: 540px;
+  padding: clamp(2rem, 6vw, 3rem) 1.8rem;
   text-align: center;
-  transform: scale(0.78);
+  transform: scale(0.75);
   opacity: 0;
-  transition: all 0.45s cubic-bezier(0.34,1.56,0.64,1);
+  transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative;
+  overflow: hidden;
 }
 
 .popup.active {
@@ -221,42 +223,49 @@ h1 {
 
 .popup h2 {
   font-family: 'Great Vibes', cursive;
-  font-size: clamp(2.8rem, 9vw, 4rem);
+  font-size: clamp(2.8rem, 9vw, 4.2rem);
   color: #ff99cc;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.6rem;
 }
 
 .popup .day-title {
-  font-size: clamp(1.3rem, 4.5vw, 1.6rem);
+  font-size: clamp(1.35rem, 4.5vw, 1.7rem);
   color: #ff3366;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.2rem;
   font-weight: 500;
 }
 
 .popup .message {
-  font-size: clamp(1.05rem, 3.8vw, 1.22rem);
-  line-height: 1.7;
+  font-size: clamp(1.08rem, 3.8vw, 1.25rem);
+  line-height: 1.75;
   color: #f0e6ff;
-  margin: 1.5rem 0;
-  padding: 0 10px;
+  margin: 1.6rem 0;
+  padding: 0 12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .popup .close-btn {
-  margin-top: 1.5rem;
+  margin-top: 1.6rem;
   background: linear-gradient(45deg, #ff3366, #c026d3);
   border: none;
   color: white;
-  padding: 0.95rem 2.4rem;
+  padding: 1rem 2.6rem;
   border-radius: 999px;
-  font-size: clamp(1.05rem, 4vw, 1.18rem);
+  font-size: clamp(1.08rem, 4vw, 1.2rem);
   cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.popup .close-btn:active {
+  transform: scale(0.97);
 }
 
 .popup::before {
   content: '💞';
   position: absolute;
-  font-size: 8rem;
-  opacity: 0.07;
+  font-size: 10rem;
+  opacity: 0.06;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-12deg);
@@ -280,9 +289,7 @@ h1 {
       <div class="message">You walked into my life like fate whispering my name.</div>
       <div class="message">You didn’t just stay… you became my peace.</div>
       <div class="message">Every day with you feels like the place my heart was always looking for.</div>
-      <div class="message question-msg">
-        Will you be my Valentine… again and always?
-      </div>
+      <div class="message">Will you be my Valentine… again and always?</div>
     </div>
     <div class="btn-container">
       <button id="nextBtn" class="btn">Next ♡</button>
@@ -294,7 +301,7 @@ h1 {
 <!-- Popup -->
 <div class="popup-overlay" id="popupOverlay">
   <div class="popup" id="popup">
-    <h2 id="popupDay">Day</h2>
+    <h2 id="popupDay"></h2>
     <div class="day-title" id="popupTitle"></div>
     <div class="message" id="popupMessage"></div>
     <button class="close-btn" id="closePopup">Close ♡</button>
@@ -315,30 +322,29 @@ function createHeart() {
 }
 setInterval(createHeart, 800);
 
-// Messages logic
+// Messages
 const messages = document.querySelectorAll('#messages .message');
 const nextBtn = document.getElementById('nextBtn');
 const yesBtn = document.getElementById('yesBtn');
-let currentIndex = -1;  // start before first
+let currentIndex = -1;
 
-function showNextMessage() {
+function showNext() {
   currentIndex++;
   if (currentIndex < messages.length) {
     messages[currentIndex].classList.add('visible');
   }
-
-  if (currentIndex >= messages.length - 1) {
+  if (currentIndex === messages.length - 1) {
     nextBtn.classList.add('hidden');
     yesBtn.classList.remove('hidden');
   }
 }
 
-// Show first message immediately
-showNextMessage();
+// Start with first message
+showNext();
 
-nextBtn.addEventListener('click', showNextMessage);
+nextBtn.addEventListener('click', showNext);
 
-// Valentine's Week data
+// Valentine's messages
 const valentineDays = [
   null,
   {name: "Rose Day",       title: "You make everything prettier", msg: "Just looking at you feels like someone handed me the most beautiful rose without even trying."},
@@ -351,7 +357,7 @@ const valentineDays = [
   {name: "Valentine’s Day",title: "You’re my always", msg: "Valentine’s is cute, but honestly every single day with you feels like the most special day. I love you so much."}
 ];
 
-// Yes → calendar + countdown
+// Yes → show journey
 yesBtn.addEventListener('click', () => {
   const card = document.getElementById('mainCard');
   card.innerHTML = `
@@ -361,7 +367,7 @@ yesBtn.addEventListener('click', () => {
     <div class="quote">"You're not my Valentine for one day… you're my favorite person every single day."</div>
   `;
 
-  // Countdown to Feb 14, 2026
+  // Countdown
   const target = new Date("Feb 14, 2026 00:00:00").getTime();
   setInterval(() => {
     const now = new Date().getTime();
@@ -378,8 +384,8 @@ yesBtn.addEventListener('click', () => {
 
   // Calendar
   const today = new Date();
+  const curMonth = today.getMonth();
   const curDate = today.getDate();
-  const curMonth = today.getMonth(); // 1 = Feb
 
   const cal = document.getElementById('calendar');
 
@@ -399,7 +405,7 @@ yesBtn.addEventListener('click', () => {
 
     if (isPast) {
       div.classList.add('done');
-      div.onclick = () => showDayPopup(d);
+      div.addEventListener('click', () => showPopup(d));
     } else {
       div.classList.add('future');
     }
@@ -408,7 +414,7 @@ yesBtn.addEventListener('click', () => {
   }
 });
 
-// Popup
+// Popup logic
 const popupOverlay = document.getElementById('popupOverlay');
 const popup = document.getElementById('popup');
 const popupDayEl = document.getElementById('popupDay');
@@ -416,7 +422,7 @@ const popupTitleEl = document.getElementById('popupTitle');
 const popupMsgEl = document.getElementById('popupMessage');
 const closePopup = document.getElementById('closePopup');
 
-function showDayPopup(day) {
+function showPopup(day) {
   const info = valentineDays[day - 6];
   if (!info) return;
 
@@ -425,20 +431,23 @@ function showDayPopup(day) {
   popupMsgEl.textContent = info.msg;
 
   popupOverlay.classList.add('active');
-  setTimeout(() => popup.classList.add('active'), 60);
+
+  // Force reflow + delay for smooth animation
+  popup.offsetHeight;
+  setTimeout(() => popup.classList.add('active'), 30);
 }
 
-closePopup.onclick = () => {
+closePopup.addEventListener('click', () => {
   popup.classList.remove('active');
   setTimeout(() => popupOverlay.classList.remove('active'), 400);
-};
+});
 
-popupOverlay.onclick = (e) => {
+popupOverlay.addEventListener('click', (e) => {
   if (e.target === popupOverlay) {
     popup.classList.remove('active');
     setTimeout(() => popupOverlay.classList.remove('active'), 400);
   }
-};
+});
 </script>
 </body>
 </html>
