@@ -12,98 +12,85 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{
-  min-height:100vh;
-  background:linear-gradient(135deg,#0f001a 0%,#1a000f 50%,#2a0015 100%);
+  height:100vh;
+  background:linear-gradient(135deg,#0f001a,#1a000f,#2a0015);
   color:#fff;
   font-family:'Poppins',sans-serif;
-  overflow-x:hidden;
-  position:relative;
-}
-#hearts{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
   overflow:hidden;
 }
-.heart{
-  position:absolute;
-  font-size:1.8rem;
-  animation:rise linear forwards;
-}
+
+#hearts{position:fixed;inset:0;pointer-events:none;z-index:1}
+.heart{position:absolute;font-size:1.8rem;animation:rise linear forwards}
 @keyframes rise{
-  0%{transform:translateY(110vh) scale(.4) rotate(0);opacity:.8}
-  100%{transform:translateY(-40vh) scale(1.3) rotate(1080deg);opacity:0}
+0%{transform:translateY(110vh) scale(.4);opacity:.8}
+100%{transform:translateY(-40vh) scale(1.3) rotate(1080deg);opacity:0}
 }
 
 .container{
   position:relative;
   z-index:10;
-  min-height:100vh;
+  height:100vh;
   display:flex;
-  align-items:flex-start;
   justify-content:center;
-  padding:60px 20px 40px;
+  align-items:center;
+  padding:20px;
 }
 
 .card{
-  background:rgba(25,8,45,.75);
+  background:rgba(25,8,45,.8);
   backdrop-filter:blur(14px);
-  border:1px solid rgba(255,50,120,.25);
   border-radius:28px;
-  padding:3rem 2.5rem;
-  max-width:680px;
   width:100%;
-  box-shadow:0 20px 70px rgba(0,0,0,.65);
+  max-width:680px;
+  height:90vh;
+  display:flex;
+  flex-direction:column;
+  padding:2.2rem;
 }
 
 h1{
   font-family:'Great Vibes',cursive;
-  font-size:clamp(3rem,8vw,6rem);
+  font-size:clamp(3rem,7vw,5rem);
   color:#ff3366;
   text-align:center;
-  text-shadow:0 0 25px rgba(255,51,102,.6);
-  margin-bottom:.8rem;
 }
 .subtitle{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.2rem,3.5vw,2.1rem);
-  color:#ff99cc;
   text-align:center;
-  margin-bottom:1.8rem;
+  color:#ff99cc;
+  margin-bottom:1rem;
+}
+
+#messages{
+  flex:1;
+  overflow-y:auto;
+  padding-right:6px;
 }
 
 .message{
-  font-size:1.15rem;
-  line-height:1.8;
   margin:1.2rem 0;
   opacity:0;
-  transform:translateY(35px);
-  transition:all 1.1s cubic-bezier(.22,1,.36,1);
+  transform:translateY(25px);
+  transition:.8s ease;
 }
 .message.visible{opacity:1;transform:translateY(0)}
 .text-center{text-align:center}
 
 .btn-container{
+  padding-top:1rem;
   text-align:center;
-  margin-top:1.8rem;
 }
 
 .btn{
   background:linear-gradient(45deg,#ff1e56,#ff5e78);
-  color:white;
-  font-size:1.2rem;
-  padding:1rem 2.8rem;
   border:none;
   border-radius:999px;
+  padding:.9rem 2.5rem;
+  font-size:1.1rem;
+  color:#fff;
   cursor:pointer;
-  box-shadow:0 12px 35px rgba(255,30,86,.45);
-  transition:.3s ease;
 }
-.btn:hover{transform:scale(1.07) translateY(-3px)}
 .btn.yes{background:linear-gradient(45deg,#c026d3,#a855f7)}
-.hidden{display:none!important}
-
+.hidden{display:none}
 </style>
 </head>
 
@@ -112,18 +99,19 @@ h1{
 
 <div class="container">
 <div class="card">
+
 <h1>Christina ♡</h1>
 <div class="subtitle">My Catwoman • My Home • My Forever</div>
 
 <div id="messages">
-<div class="message visible">Christy, you came into my life when everything was feeling off and wrong — fake people, fake care.<br><br>Then you entered as the most real person I've ever seen in my life… with some real care.</div>
-<div class="message">You became something that finally made me feel like I have a home.<br><br>Something I want to hold lifelong with me.</div>
-<div class="message">Whenever I get a chance to do something for you, I really try my best to utilize it better.<br><br>And the moment I got the chance to be your boyfriend was my favourite moment with you.</div>
-<div class="message">It was like finally God saw my efforts and chose me for you.<br><br>I'm not making this over-dramatic — all this is straight from my thoughts and heart.</div>
-<div class="message">When the world feels competitive and heavy, giving me tough competition…<br>you're the only place I feel comfortable and home.</div>
-<div class="message">I do love you more than the words I wrote here.<br><br>You're already mine… but as it's Propose Day, I'm proposing you again:</div>
-<div class="message text-center" style="font-size:1.5rem;font-weight:500;color:#ff99cc;padding-top:1.2rem;">
-<strong>Christina (my beautiful Catwoman),<br>will you be my Valentine… again and always?</strong>
+<div class="message visible">Christy, you came into my life when everything felt wrong. Then you entered as the most real person I’ve ever seen.</div>
+<div class="message">You became something that finally made me feel like I have a home.</div>
+<div class="message">Whenever I get a chance to do something for you, I really try my best.</div>
+<div class="message">The moment I got the chance to be your boyfriend was my favourite moment.</div>
+<div class="message">When the world feels heavy, you're the only place I feel comfortable.</div>
+<div class="message">I love you more than these words can explain.</div>
+<div class="message text-center" style="font-size:1.3rem;color:#ff99cc">
+<strong>Christina, will you be my Valentine… again and always?</strong>
 </div>
 </div>
 
@@ -131,53 +119,41 @@ h1{
 <button id="nextBtn" class="btn">Next ♡</button>
 <button id="yesBtn" class="btn yes hidden">Yes, forever ♡</button>
 </div>
+
 </div>
 </div>
 
 <script>
-const heartContainer=document.getElementById('hearts');
-let heartInterval;
-
-function createHeart(){
-  const heart=document.createElement('div');
-  heart.className='heart';
-  heart.innerHTML=['♡','💗','💞','💖','❤️','🫶'][Math.floor(Math.random()*6)];
-  heart.style.left=Math.random()*100+'vw';
-  heart.style.animationDuration=(Math.random()*6+8)+'s';
-  heart.style.fontSize=(Math.random()*2+1.2)+'rem';
-  heartContainer.appendChild(heart);
-  setTimeout(()=>heart.remove(),14000);
+const heartBox=document.getElementById('hearts');
+function heart(){
+  const h=document.createElement('div');
+  h.className='heart';
+  h.innerHTML=['♡','💗','💞','💖','❤️'][Math.floor(Math.random()*5)];
+  h.style.left=Math.random()*100+'vw';
+  h.style.animationDuration=(Math.random()*6+7)+'s';
+  heartBox.appendChild(h);
+  setTimeout(()=>h.remove(),12000);
 }
-heartInterval=setInterval(createHeart,500);
+setInterval(heart,500);
 
-const messages=document.querySelectorAll('#messages .message');
+const messages=document.querySelectorAll('.message');
 const nextBtn=document.getElementById('nextBtn');
 const yesBtn=document.getElementById('yesBtn');
-let current=0;
+let i=0;
 
 nextBtn.onclick=()=>{
-  if(current>=messages.length-1)return;
-  current++;
-  messages[current].classList.add('visible');
-  messages[current].scrollIntoView({behavior:'smooth',block:'center'});
-  if(current===messages.length-1){
-    nextBtn.classList.add('hidden');
-    yesBtn.classList.remove('hidden');
-  }
+ if(i>=messages.length-1)return;
+ i++;
+ messages[i].classList.add('visible');
+ messages[i].scrollIntoView({behavior:'smooth',block:'nearest'});
+ if(i===messages.length-1){
+   nextBtn.classList.add('hidden');
+   yesBtn.classList.remove('hidden');
+ }
 };
 
 yesBtn.onclick=()=>{
-  clearInterval(heartInterval);
-  document.querySelector('.card').innerHTML=`
-    <h1 style="font-size:clamp(4rem,10vw,8rem);margin:2rem 0;">YESSSS!!! ♡</h1>
-    <div style="font-size:2.8rem;color:#ff99cc;margin:2rem 0;font-family:'Great Vibes',cursive;">
-      I love you forever, my Catwoman
-    </div>
-    <div style="font-size:1.5rem;opacity:.9;">
-      Thank you for being my home.<br>Here's to us — always and endlessly ♡
-    </div>`;
-  for(let i=0;i<160;i++){setTimeout(createHeart,i*40)}
-  heartInterval=setInterval(createHeart,200);
+ document.querySelector('.card').innerHTML="<h1 style='font-size:5rem;text-align:center'>YESSSS!!! ♡</h1>";
 };
 </script>
 </body>
