@@ -16,7 +16,7 @@ HTML_CONTENT = r"""
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS v3 Play CDN (stable & lightweight) -->
+  <!-- Tailwind CSS v3 via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
   <script>
@@ -27,9 +27,6 @@ HTML_CONTENT = r"""
             script: ['Great Vibes', 'cursive'],
             serif: ['Playfair Display', 'serif'],
             sans: ['Poppins', 'sans-serif'],
-          },
-          animation: {
-            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
           }
         }
       }
@@ -59,18 +56,26 @@ HTML_CONTENT = r"""
       opacity: 1;
       transform: translateY(0);
     }
+    .btn-hover {
+      transition: all 0.3s ease;
+    }
+    .btn-hover:hover {
+      transform: scale(1.08) translateY(-3px);
+      box-shadow: 0 20px 40px -10px rgba(236, 72, 153, 0.6);
+      filter: brightness(1.15);
+    }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-[#0f001a] via-[#1a000f] to-[#2a0015] text-white overflow-hidden relative font-sans">
 
-  <!-- Floating hearts -->
+  <!-- Floating hearts background -->
   <div id="hearts" class="fixed inset-0 pointer-events-none z-10 overflow-hidden"></div>
 
   <div class="relative z-20 min-h-screen flex items-center justify-center p-6">
     <div class="w-full max-w-2xl bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl shadow-black/70 p-10 md:p-14
                 transition-all duration-700 hover:shadow-pink-600/30 hover:border-pink-600/40">
 
-      <h1 class="text-6xl md:text-8xl font-script text-center text-pink-500 drop-shadow-lg animate-pulse-slow">
+      <h1 class="text-6xl md:text-8xl font-script text-center text-pink-500 drop-shadow-lg">
         Christina ♡
       </h1>
       
@@ -117,16 +122,14 @@ HTML_CONTENT = r"""
 
       <div class="mt-12 text-center">
         <button id="nextBtn" 
-                class="px-10 py-5 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 
-                       text-white font-medium text-xl rounded-full shadow-lg shadow-pink-800/50 
-                       transform transition-all duration-300 hover:scale-110 hover:shadow-2xl active:scale-95">
+                class="px-10 py-5 bg-gradient-to-r from-pink-600 to-rose-600 text-white font-medium text-xl rounded-full shadow-lg shadow-pink-800/50 
+                       btn-hover">
           Next ♡
         </button>
 
         <button id="yesBtn" 
-                class="px-12 py-6 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 
-                       text-white font-medium text-2xl rounded-full shadow-xl shadow-pink-800/60 hidden
-                       transform transition-all duration-400 hover:scale-110 hover:shadow-2xl active:scale-95">
+                class="px-12 py-6 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium text-2xl rounded-full shadow-xl shadow-pink-800/60 hidden
+                       btn-hover">
           Yes, forever ♡
         </button>
       </div>
@@ -134,7 +137,7 @@ HTML_CONTENT = r"""
   </div>
 
 <script>
-// Floating hearts background
+// Floating hearts
 function createHeart() {
   const heart = document.createElement('div');
   heart.className = 'heart';
@@ -148,7 +151,7 @@ function createHeart() {
 }
 setInterval(createHeart, 450);
 
-// Message reveal sequence
+// Message + button logic
 const messages = document.querySelectorAll('#messages .message');
 const nextBtn = document.getElementById('nextBtn');
 const yesBtn = document.getElementById('yesBtn');
@@ -156,21 +159,29 @@ let index = -1;
 
 function showNext() {
   if (index >= messages.length - 1) return;
+
   index++;
   messages[index].classList.add('visible');
 
+  // After last message → hide Next, show Yes
   if (index === messages.length - 1) {
-    nextBtn.classList.add('hidden');
     setTimeout(() => {
+      nextBtn.classList.add('hidden');
       yesBtn.classList.remove('hidden');
       yesBtn.classList.add('animate-pulse');
     }, 1800);
   }
 }
 
+// Make sure first message & button appear right away
+window.addEventListener('load', () => {
+  showNext();           // show first message
+  nextBtn.classList.remove('hidden'); // force visible (safety)
+});
+
 nextBtn.addEventListener('click', showNext);
 
-// Yes → celebration explosion
+// Yes celebration
 yesBtn.addEventListener('click', () => {
   const card = document.querySelector('.max-w-2xl');
   card.innerHTML = `
@@ -190,14 +201,12 @@ yesBtn.addEventListener('click', () => {
   card.classList.remove('bg-white/5', 'border-white/10');
   card.classList.add('bg-gradient-to-br', 'from-pink-950', 'via-purple-950', 'to-rose-950', 'border-pink-600/40');
 
-  // Massive heart storm
+  // Heart storm
   for (let i = 0; i < 150; i++) {
     setTimeout(createHeart, i * 40);
   }
   setInterval(createHeart, 180);
 });
-
-showNext(); // Start immediately
 </script>
 
 </body>
