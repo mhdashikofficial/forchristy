@@ -200,7 +200,7 @@ h1 {
   line-height: 1.35;
 }
 
-/* Popup */
+/* Popup styles */
 .popup-overlay {
   position: fixed;
   inset: 0;
@@ -302,7 +302,7 @@ h1 {
       <div class="message visible">You walked into my life like fate whispering my name.</div>
       <div class="message">You didn’t just stay… you became my peace.</div>
       <div class="message">Every day with you feels like the place my heart was always looking for.</div>
-      <div class="message" id="questionMessage" style="text-align:center; font-size: clamp(1.2rem, 5vw, 1.35rem); color:#ff99cc; margin: 2.8rem 0 2rem; opacity:0; transform:translateY(20px); transition:all 0.8s ease-out;">
+      <div class="message" id="question" style="text-align:center; font-size: clamp(1.2rem, 5vw, 1.35rem); color:#ff99cc; margin: 2.8rem 0 2rem;">
         Will you be my Valentine… again and always?
       </div>
     </div>
@@ -324,7 +324,7 @@ h1 {
 </div>
 
 <script>
-// Floating hearts
+// Hearts animation
 const heartBox = document.getElementById('hearts');
 function createHeart() {
   const h = document.createElement('div');
@@ -338,25 +338,25 @@ function createHeart() {
 setInterval(createHeart, 800);
 
 // Messages logic
-const messages = document.querySelectorAll('.message');
+const messages = document.querySelectorAll('#messages .message');
 const nextBtn = document.getElementById('nextBtn');
 const yesBtn = document.getElementById('yesBtn');
-const questionMessage = document.getElementById('questionMessage');
 
 let currentIndex = 0;
 
+// Show first message already
+messages[0].classList.add('visible');
+
 nextBtn.addEventListener('click', () => {
-  if (currentIndex >= messages.length - 1) return;
-
-  // Hide current if needed, show next
-  messages[currentIndex].style.opacity = '0';
-  messages[currentIndex].style.transform = 'translateY(20px)';
-
+  // Move to next message
   currentIndex++;
-  messages[currentIndex].classList.add('visible');
 
-  // When question appears → show Yes button, hide Next
-  if (currentIndex === messages.length - 1) {
+  if (currentIndex < messages.length) {
+    messages[currentIndex].classList.add('visible');
+  }
+
+  // When we reach the last message (the question), swap buttons
+  if (currentIndex >= messages.length - 1) {
     nextBtn.classList.add('hidden');
     yesBtn.classList.remove('hidden');
   }
@@ -375,7 +375,7 @@ const valentineDays = [
   {name:"Valentine’s Day", title:"You’re my always", msg:"Valentine’s is cute, but honestly every single day with you feels like the most special day. I love you so much."}
 ];
 
-// Yes button → show calendar & countdown
+// Yes → show calendar
 yesBtn.addEventListener('click', () => {
   const card = document.getElementById('mainCard');
   card.innerHTML = `
@@ -385,7 +385,7 @@ yesBtn.addEventListener('click', () => {
     <div class="quote">"You're not my Valentine for one day… you're my favorite person every single day."</div>
   `;
 
-  // Countdown to Feb 14, 2026
+  // Countdown
   const target = new Date("Feb 14, 2026 00:00:00").getTime();
   setInterval(() => {
     const now = new Date().getTime();
@@ -400,10 +400,10 @@ yesBtn.addEventListener('click', () => {
     document.getElementById('countdown').innerHTML = `${days}d ${hours}h ${mins}m until our Valentine's ♡`;
   }, 1000);
 
-  // Calendar (Feb 7–14)
+  // Calendar
   const today = new Date();
   const currentDate = today.getDate();
-  const currentMonth = today.getMonth(); // 1 = February
+  const currentMonth = today.getMonth();
 
   const cal = document.getElementById('calendar');
 
@@ -432,7 +432,7 @@ yesBtn.addEventListener('click', () => {
   }
 });
 
-// Popup logic
+// Popup functions
 const popupOverlay = document.getElementById('popupOverlay');
 const popup = document.getElementById('popup');
 const popupDay = document.getElementById('popupDay');
