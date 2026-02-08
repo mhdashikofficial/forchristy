@@ -110,6 +110,7 @@ h1 {
   cursor: pointer;
   touch-action: manipulation;
   transition: transform 0.2s;
+  margin: 0 8px;
 }
 
 .btn:active {
@@ -279,7 +280,6 @@ h1 {
   pointer-events: none;
 }
 
-/* Media query for very small screens */
 @media (max-width: 380px) {
   .calendar {
     grid-template-columns: repeat(2, 1fr);
@@ -302,7 +302,7 @@ h1 {
       <div class="message visible">You walked into my life like fate whispering my name.</div>
       <div class="message">You didn’t just stay… you became my peace.</div>
       <div class="message">Every day with you feels like the place my heart was always looking for.</div>
-      <div class="message" style="text-align:center; font-size: clamp(1.2rem, 5vw, 1.35rem); color:#ff99cc; margin: 2.5rem 0 1.8rem;">
+      <div class="message" id="questionMessage" style="text-align:center; font-size: clamp(1.2rem, 5vw, 1.35rem); color:#ff99cc; margin: 2.8rem 0 2rem; opacity:0; transform:translateY(20px); transition:all 0.8s ease-out;">
         Will you be my Valentine… again and always?
       </div>
     </div>
@@ -324,8 +324,8 @@ h1 {
 </div>
 
 <script>
+// Floating hearts
 const heartBox = document.getElementById('hearts');
-
 function createHeart() {
   const h = document.createElement('div');
   h.className = 'heart';
@@ -335,27 +335,34 @@ function createHeart() {
   heartBox.appendChild(h);
   setTimeout(() => h.remove(), 15000);
 }
-
 setInterval(createHeart, 800);
 
-// Messages reveal
-const msgs = document.querySelectorAll('.message');
+// Messages logic
+const messages = document.querySelectorAll('.message');
 const nextBtn = document.getElementById('nextBtn');
 const yesBtn = document.getElementById('yesBtn');
-let i = 0;
+const questionMessage = document.getElementById('questionMessage');
 
-nextBtn.onclick = () => {
-  if (i >= msgs.length - 1) return;
-  i++;
-  msgs[i].classList.add('visible');
-  
-  if (i === msgs.length - 1) {
+let currentIndex = 0;
+
+nextBtn.addEventListener('click', () => {
+  if (currentIndex >= messages.length - 1) return;
+
+  // Hide current if needed, show next
+  messages[currentIndex].style.opacity = '0';
+  messages[currentIndex].style.transform = 'translateY(20px)';
+
+  currentIndex++;
+  messages[currentIndex].classList.add('visible');
+
+  // When question appears → show Yes button, hide Next
+  if (currentIndex === messages.length - 1) {
     nextBtn.classList.add('hidden');
     yesBtn.classList.remove('hidden');
   }
-};
+});
 
-// Valentine's Week messages
+// Valentine's Week data
 const valentineDays = [
   null,
   {name:"Rose Day", title:"You make everything prettier", msg:"Just looking at you feels like someone handed me the most beautiful rose without even trying."},
@@ -368,8 +375,8 @@ const valentineDays = [
   {name:"Valentine’s Day", title:"You’re my always", msg:"Valentine’s is cute, but honestly every single day with you feels like the most special day. I love you so much."}
 ];
 
-// After Yes
-yesBtn.onclick = () => {
+// Yes button → show calendar & countdown
+yesBtn.addEventListener('click', () => {
   const card = document.getElementById('mainCard');
   card.innerHTML = `
     <h1>Our Love Journey ♡</h1>
@@ -378,7 +385,7 @@ yesBtn.onclick = () => {
     <div class="quote">"You're not my Valentine for one day… you're my favorite person every single day."</div>
   `;
 
-  // Countdown
+  // Countdown to Feb 14, 2026
   const target = new Date("Feb 14, 2026 00:00:00").getTime();
   setInterval(() => {
     const now = new Date().getTime();
@@ -393,10 +400,10 @@ yesBtn.onclick = () => {
     document.getElementById('countdown').innerHTML = `${days}d ${hours}h ${mins}m until our Valentine's ♡`;
   }, 1000);
 
-  // Calendar
+  // Calendar (Feb 7–14)
   const today = new Date();
   const currentDate = today.getDate();
-  const currentMonth = today.getMonth(); // 1 = Feb
+  const currentMonth = today.getMonth(); // 1 = February
 
   const cal = document.getElementById('calendar');
 
@@ -416,16 +423,16 @@ yesBtn.onclick = () => {
 
     if (isPast) {
       div.classList.add('done');
-      div.onclick = () => showDayPopup(d);
+      div.addEventListener('click', () => showDayPopup(d));
     } else {
       div.classList.add('future');
     }
 
     cal.appendChild(div);
   }
-};
+});
 
-// Popup
+// Popup logic
 const popupOverlay = document.getElementById('popupOverlay');
 const popup = document.getElementById('popup');
 const popupDay = document.getElementById('popupDay');
@@ -446,17 +453,17 @@ function showDayPopup(day) {
   setTimeout(() => popup.classList.add('active'), 50);
 }
 
-closePopup.onclick = () => {
+closePopup.addEventListener('click', () => {
   popup.classList.remove('active');
   setTimeout(() => popupOverlay.classList.remove('active'), 350);
-};
+});
 
-popupOverlay.onclick = (e) => {
+popupOverlay.addEventListener('click', (e) => {
   if (e.target === popupOverlay) {
     popup.classList.remove('active');
     setTimeout(() => popupOverlay.classList.remove('active'), 350);
   }
-};
+});
 </script>
 </body>
 </html>
